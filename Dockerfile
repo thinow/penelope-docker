@@ -11,7 +11,7 @@ WORKDIR /opt/penelope
 RUN apt-get update \
  && apt-get install -y python-pip dictzip curl \
  && rm -rf /var/lib/apt/lists/* \
- && pip install lxml marisa-trie penelope
+ && pip install "penelope>=3.1.0.0,<3.2.0.0"
 
 RUN curl 'http://kindlegen.s3.amazonaws.com/kindlegen_linux_2.6_i386_v2_9.tar.gz' --output /tmp/kindlegen.tar.gz \
  && tar xzvf /tmp/kindlegen.tar.gz --directory /opt/kindlegen \
