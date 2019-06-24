@@ -3,19 +3,15 @@ LABEL description="Contains the tool Penelope (https://github.com/pettarin/penel
       maintainer="Thierry Nowak" \
       email="thinow@gmail.com"
 
-RUN mkdir -p /opt/kindlegen \
-             /opt/penelope
-
+RUN mkdir -p /opt/penelope
 WORKDIR /opt/penelope
 
+COPY resources/extracted/kindlegen /opt/kindlegen
+RUN ln -s /opt/kindlegen/kindlegen /usr/local/bin/kindlegen
+
 RUN apt-get update \
- && apt-get install -y python-pip dictzip curl \
+ && apt-get install -y python-pip dictzip \
  && rm -rf /var/lib/apt/lists/* \
  && pip install "penelope>=3.1.0.0,<3.2.0.0"
-
-RUN curl 'http://kindlegen.s3.amazonaws.com/kindlegen_linux_2.6_i386_v2_9.tar.gz' --output /tmp/kindlegen.tar.gz \
- && tar xzvf /tmp/kindlegen.tar.gz --directory /opt/kindlegen \
- && rm /tmp/kindlegen.tar.gz \
- && ln -s /opt/kindlegen/kindlegen /usr/local/bin/kindlegen
 
 ENTRYPOINT ["penelope"]
