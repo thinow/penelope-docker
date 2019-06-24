@@ -10,5 +10,10 @@ download-kindlegen: clean-resources
 	tar xzvf ./resources/compressed/kindlegen.tar.gz --directory ./resources/extracted/kindlegen
 
 build: download-kindlegen
-	docker build -t penelope .
+	docker build --tag thinow/penelope:local .
+
+push: build
+	docker login
+	docker tag thinow/penelope:local thinow/penelope:latest
+	docker push thinow/penelope:latest
 
